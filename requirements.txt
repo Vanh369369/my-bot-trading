@@ -1,0 +1,5 @@
+pyTelegramBotAPI
+google-generativeai
+pandas
+yfinance
+matplotlib
