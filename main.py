@@ -64,6 +64,11 @@ def check_gold(message):
         bot.reply_to(message, "❌ Lỗi lấy dữ liệu.")
 
 if __name__ == "__main__":
-    keep_alive() # Kích hoạt cổng giả
-    print("Bot đang chạy...")
-    bot.infinity_polling()
+    # 1. Chạy cổng giả Flask để Render không báo lỗi Port
+    keep_alive() 
+    
+    # 2. In ra thông báo để mình check trong Logs của Render
+    print("Bot đang chạy và sẵn sàng nhận lệnh...")
+    
+    # 3. Dòng này cực kỳ quan trọng để Bot luôn lắng nghe Telegram
+    bot.infinity_polling(timeout=10, long_polling_timeout=5)
