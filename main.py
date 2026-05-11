@@ -8,14 +8,14 @@ from flask import Flask
 from threading import Thread
 import os
 
-# --- PHẦN GIỮ MẠNG CHO RENDER ---
+# --- TẠO CỔNG GIẢ ĐỂ RENDER KHÔNG BÁO LỖI ---
 app = Flask('')
 @app.route('/')
-def home():
-    return "Bot is running!"
+def home(): return "Bot is running!"
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run)
@@ -52,7 +52,7 @@ def get_ou_analysis(ticker):
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message, "✅ Trạm điều khiển Online! Gõ /gold để check biên độ.")
+    bot.reply_to(message, "✅ Trạm điều khiển đã Online! Gõ /gold để check biên độ.")
 
 @bot.message_handler(commands=['gold'])
 def check_gold(message):
@@ -64,6 +64,6 @@ def check_gold(message):
         bot.reply_to(message, "❌ Lỗi lấy dữ liệu.")
 
 if __name__ == "__main__":
-    keep_alive() # Quan trọng để Render không báo lỗi
+    keep_alive() # Kích hoạt cổng giả
     print("Bot đang chạy...")
     bot.infinity_polling()
